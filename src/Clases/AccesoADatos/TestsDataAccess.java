@@ -69,10 +69,11 @@ public class TestsDataAccess {
      *
      * @return
      */
-    public Test reconstruirTest(){
+    public static Test reconstruirTest(String path){
         ObjectInputStream inputStream = null;
         Test test = null;
         try{
+            inputStream = new ObjectInputStream (new FileInputStream (path));
             test = (Test)inputStream.readObject ();
         }catch(IOException | ClassNotFoundException e){
             System.out.println (Menu.MENSAJEERROR );

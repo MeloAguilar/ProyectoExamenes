@@ -17,7 +17,8 @@ public class Main {
     private static Scanner sc = new Scanner (System.in);
 
     public static void main(String[] args) {
-        Test test = crearTestNuevo ( );
+      Test test = TestsDataAccess.reconstruirTest (TestsDataAccess.PATH+ "Mitestfachero.dat");
+        System.out.println ( test );
     }
 
 
