@@ -56,8 +56,12 @@ public class Menu {
 
                 }
                 case "2" -> {
+                    char caracterDeRespuesta = 'a';
                     List<String> posiblesRespuestas =  establecerOpcionesPreguntaTest (sc);
-                    System.out.println (posiblesRespuestas );
+                    for(String respuesta : posiblesRespuestas){
+                        System.out.println (caracterDeRespuesta + " -> " + respuesta);
+                        caracterDeRespuesta++;
+                    }
                     p = new PreguntaTipoTest (enunciado, 2,posiblesRespuestas,escogerRespuestaCorrectaParaTipoTest (sc));
                             preguntas.add ( p);
 
@@ -147,10 +151,12 @@ public class Menu {
      */
     public static double RealizarTest(Scanner sc, String nombreTest){
         double puntuacion = 0;
+        int numeroPregunta = 1;
         LinkedList<Pregunta> preguntas = (LinkedList<Pregunta>) TestsDataAccess.reconstruirTest (nombreTest);
-        System.out.println ("**********************************************************\n"+nombreTest+"\n**********************************************************\n" );
+        System.out.println ("**********************************************************\nTest --> "+nombreTest+"\n**********************************************************\n" );
         for(Pregunta pregunta: preguntas){
-            System.out.println (pregunta.getEnunciado () );
+            System.out.println ("Pregunta "+numeroPregunta+"\n" +pregunta.getEnunciado () );
+            numeroPregunta++;
             if(pregunta instanceof PreguntaCorta){
                 System.out.println ("Introduce la respuesta" );
                 if(sc.nextLine ().equals (((PreguntaCorta) pregunta).getRespuestaCorrecta ())){
@@ -164,7 +170,7 @@ public class Menu {
                     letra++;
                 }
                 System.out.println ("Introduce el caracter de la respuesta" );
-                if(sc.nextLine ().equals (test.getRespuestaCorrecta ())){
+                if(sc.nextLine ().toCharArray ()[0]== (test.getRespuestaCorrecta ())){
                     puntuacion += pregunta.getPuntuacion ();
                 }else{
                     if(puntuacion > pregunta.getPuntuacion ()){

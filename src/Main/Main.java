@@ -18,8 +18,9 @@ public class Main {
 
     public static void main(String[] args) {
         boolean exit = false;
-        System.out.println (Menu.MENSAJE_INICIAL);
+
         do {
+            System.out.println (Menu.MENSAJE_INICIAL);
             switch (sc.nextLine ( )) {
                 case "1" -> {
                     System.out.println (Menu.MENSAJE_OPCION_UNO);
@@ -53,7 +54,7 @@ public class Main {
 
     //Case 2
     private static double getPorcentajeAcierto() {
-        String nombreTest = Menu.pedirDato (sc, "El nombre del Test");
+        String nombreTest = Menu.pedirDato (sc, "\n¿Cómo se llama el Test?");
         double puntuacionDeLaSacada = Menu.RealizarTest (sc, nombreTest);
         List<Pregunta> preguntas = TestsDataAccess.reconstruirTest (nombreTest);
         double puntuacionReal = 0;
