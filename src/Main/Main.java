@@ -51,7 +51,7 @@ public class Main {
 
 
 
-    //Case 1
+    //Case 2
     private static double getPorcentajeAcierto() {
         String nombreTest = Menu.pedirDato (sc, "El nombre del Test");
         double puntuacionDeLaSacada = Menu.RealizarTest (sc, nombreTest);
@@ -64,7 +64,7 @@ public class Main {
     }
 
 
-    //Case 2
+    //Case 1
     private static Test crearTestNuevo() {
         Test test = Menu.crearNuevoTest (sc);
         TestsDataAccess.introducirTestEnFichero (test);

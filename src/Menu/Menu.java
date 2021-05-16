@@ -139,9 +139,16 @@ public class Menu {
     }
 
 
+    /**
+     *
+     * @param sc
+     * @param nombreTest
+     * @return
+     */
     public static double RealizarTest(Scanner sc, String nombreTest){
         double puntuacion = 0;
         LinkedList<Pregunta> preguntas = (LinkedList<Pregunta>) TestsDataAccess.reconstruirTest (nombreTest);
+        System.out.println ("**********************************************************\n"+nombreTest+"\n**********************************************************\n" );
         for(Pregunta pregunta: preguntas){
             System.out.println (pregunta.getEnunciado () );
             if(pregunta instanceof PreguntaCorta){
@@ -151,7 +158,6 @@ public class Menu {
                 }
             } else {
                 char letra = 'a';
-
                 PreguntaTipoTest test = (PreguntaTipoTest) pregunta;
                 for(String posibleR : ((PreguntaTipoTest) pregunta).getPosiblesRespuestas ()){
                     System.out.println (letra + " --> " +posibleR );
