@@ -9,7 +9,7 @@ public class PreguntaTipoTest extends Pregunta implements Serializable {
     //Atributos
     private List<String> posiblesRespuestas;
     private char respuestaCorrecta;
-
+    public static final long serialVersionUID = 1L;
     //Métodos
 
     //Constructor
@@ -37,6 +37,12 @@ public class PreguntaTipoTest extends Pregunta implements Serializable {
     public void setRespuestaCorrecta(char respuestaCorrecta) {
         this.respuestaCorrecta = respuestaCorrecta;
     }
+
+
+    public double getPuntuacionReal(){
+        return (this.getPuntuacion ()/this.getPosiblesRespuestas ().toArray().length) * 100;
+    }
+
 
     @Override
     public String toString() {

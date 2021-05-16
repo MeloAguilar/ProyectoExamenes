@@ -6,6 +6,7 @@ public class Pregunta implements Serializable {
 
     private String enunciado;
     private double puntuacion;
+    public static final long serialVersionUID = 1L;
 
     public Pregunta(String enunciado, double puntuacion) {
         this.enunciado = enunciado;

@@ -1,5 +1,6 @@
 package Menu;
 
+import Clases.AccesoADatos.TestsDataAccess;
 import Clases.Preguntas.Pregunta;
 import Clases.Preguntas.PreguntaCorta;
 import Clases.Preguntas.PreguntaTipoTest;
@@ -10,7 +11,8 @@ import java.util.*;
 public class Menu {
 
     public static final String MENSAJEERROR = "Se rompió";
-
+    public static final String MENSAJE_INICIAL = "1 --> Crear Test\n2 --> Realizar Test";
+    public static final String MENSAJE_OPCION_UNO = "1 --> mostrar un Test\n2 --> Crear un Test";
 
     /**
      * <h2>pedirDato(Scanner, String)</h2>
@@ -135,4 +137,39 @@ public class Menu {
         }while(!exit);
         return new Test (nombre, preguntas);
     }
+
+
+    public static double RealizarTest(Scanner sc, String nombreTest){
+        double puntuacion = 0;
+        LinkedList<Pregunta> preguntas = (LinkedList<Pregunta>) TestsDataAccess.reconstruirTest (nombreTest);
+        for(Pregunta pregunta: preguntas){
+            System.out.println (pregunta.getEnunciado () );
+            if(pregunta instanceof PreguntaCorta){
+                System.out.println ("Introduce la respuesta" );
+                if(sc.nextLine ().equals (((PreguntaCorta) pregunta).getRespuestaCorrecta ())){
+                    puntuacion += pregunta.getPuntuacion ();
+                }
+            } else {
+                char letra = 'a';
+
+                PreguntaTipoTest test = (PreguntaTipoTest) pregunta;
+                for(String posibleR : ((PreguntaTipoTest) pregunta).getPosiblesRespuestas ()){
+                    System.out.println (letra + " --> " +posibleR );
+                    letra++;
+                }
+                System.out.println ("Introduce el caracter de la respuesta" );
+                if(sc.nextLine ().equals (test.getRespuestaCorrecta ())){
+                    puntuacion += pregunta.getPuntuacion ();
+                }else{
+                    if(puntuacion > pregunta.getPuntuacion ()){
+                        puntuacion -= ((PreguntaTipoTest) pregunta).getPuntuacionReal ();
+                    } else {
+                        puntuacion = 0;
+                    }
+                }
+            }
+        }
+        return puntuacion;
+    }
+
 }

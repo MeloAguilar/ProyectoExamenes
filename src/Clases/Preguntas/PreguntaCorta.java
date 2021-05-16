@@ -6,7 +6,7 @@ public class PreguntaCorta extends Pregunta implements Serializable {
 
     //Atributos
     private String respuestaCorrecta;
-    public static final long serialFilter = 1L;
+    public static final long serialVersionUID = 1L;
     //Métodos
 
     //Constructor

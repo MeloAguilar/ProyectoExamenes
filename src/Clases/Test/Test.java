@@ -13,6 +13,7 @@ public class Test implements Serializable {
     private String nombre;
     private File ficheroTest;
     private List<Pregunta> preguntas;
+    public static final long serialVersionUID = 2L;
 
 
     public Test(String nombre, List<Pregunta> preguntas) {
@@ -53,4 +54,7 @@ public class Test implements Serializable {
     public String toString() {
         return nombre + ", preguntas=" + preguntas + '}';
     }
+
+
+
 }

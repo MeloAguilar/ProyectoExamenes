@@ -14,6 +14,9 @@ public class TestsDataAccess {
     public static final String PATH = ".\\src\\Ficheros\\";
 
 
+
+
+
     /**
      *Método que se encarga de cerrar el flujo de un Autocloseable
      * @param cl
@@ -79,6 +82,9 @@ public class TestsDataAccess {
         ObjectInputStream inputStream = null;
         Pregunta pregunta = null;
         List<Pregunta> listapreguntas= new LinkedList<> (  );
+        if(!path.endsWith (".dat") || !path.endsWith (".txt")) {
+            path = PATH + path + EXTENSION;
+        }
         try{
             inputStream = new ObjectInputStream (new FileInputStream (path));
             while((pregunta = (Pregunta)inputStream.readObject ()) != null){
