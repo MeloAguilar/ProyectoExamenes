@@ -14,7 +14,7 @@ public class TestsDataAccess {
 
 
     /**
-     *
+     *Método que se encarga de cerrar el flujo de un Autocloseable
      * @param cl
      */
     private static void cerrarFlujo(AutoCloseable cl){
@@ -29,9 +29,14 @@ public class TestsDataAccess {
 
 
     /**
+     * <h2>introducirTestEnFichero(Test)</h2>
      *
+     * Método que introduce las preguntas de un test en su fichero correspondiente.
+     * Precondiciones: el Test introducido debe estar inicializado y debe contener preguntas en su Map de preguntas
+     * Postcondiciones: El método devolverá un booleano que será true si se ha conseguido introducir el test en su
+     * correspondiente fichero y false si no se consiguió realizar.
      * @param testAIntroducir
-     * @return
+     * @return success
      */
     public static boolean introducirTestEnFichero(Test testAIntroducir){
         boolean success = false;
@@ -65,9 +70,11 @@ public class TestsDataAccess {
     /**
      * <h2>reconstruirTest()</h2>
      *
-     * Método que reconstruye un Test a partir de su archivo.
-     *
-     * @return
+     * Método sencillo que reconstruye un Test a partir de su archivo.
+     * Precondiciones: path debe ser una ruta válida en la que se encuentre archivado un test
+     * Postcondiciones: Devolverá el test recogido de su ruta
+     * @param path: Ruta de un archivo en el que se encuentran los datos de un test
+     * @return test:
      */
     public static Test reconstruirTest(String path){
         ObjectInputStream inputStream = null;
@@ -77,6 +84,8 @@ public class TestsDataAccess {
             test = (Test)inputStream.readObject ();
         }catch(IOException | ClassNotFoundException e){
             System.out.println (Menu.MENSAJEERROR );
+        }finally {
+            cerrarFlujo (inputStream);
         }
         return test;
     }

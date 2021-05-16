@@ -33,6 +33,16 @@ public class Menu {
         return sc.nextLine ( );
     }
 
+
+    /**
+     * <h2>crearPreguntasDeUntest(Scanner)</h2>
+     *
+     * Método que establece las preguntas de un test pidiendoselas al usuario por teclado
+     * Precondiciones:
+     * Postcondiciones:
+     * @param sc
+     * @return
+     */
     public static Map<Integer, Pregunta> crearPreguntasDeUnTest(Scanner sc){
         TreeMap<Integer, Pregunta> preguntas = new TreeMap<> (  );
         Pregunta p = null;
@@ -65,12 +75,22 @@ public class Menu {
     }
 
 
+    /**
+     * Método que sirve para establecer por teclado la respuesta correcta de una pregunta tipo test
+     * @param sc
+     * @return
+     */
     private static char escogerRespuestaCorrectaParaTipoTest(Scanner sc){
         char opcionCorrecta = 'a';
         return pedirDato (sc, "el caracter de la respuesta correcta").toCharArray ()[0];
     }
 
 
+    /**
+     * Método que establece las opciones de una pregunta tipo test mediante datos pedidos al usuario por teclado
+     * @param sc
+     * @return
+     */
     private static Map<Character, String> establecerOpcionesPreguntaTest(Scanner sc){
         Map<Character, String> posiblesRespuestas  = new TreeMap<> (  );
         char clave = 'a';
@@ -86,6 +106,12 @@ public class Menu {
     return posiblesRespuestas;
     }
 
+
+    /**
+     * Método que genera un test a partir de datos introducidos mediante scanner
+     * @param sc
+     * @return
+     */
     public static Test crearNuevoTest(Scanner sc){
         String nombre = pedirDato (sc, "el nombre del test");
         Map<Integer, Pregunta> preguntas = crearPreguntasDeUnTest (sc);

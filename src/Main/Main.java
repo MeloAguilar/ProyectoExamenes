@@ -17,10 +17,20 @@ public class Main {
     private static Scanner sc = new Scanner (System.in);
 
     public static void main(String[] args) {
-      Test test = TestsDataAccess.reconstruirTest (TestsDataAccess.PATH+ "Mitestfachero.dat");
-        System.out.println ( test );
-    }
+        switch (sc.nextLine ()) {
+            case "1" -> {
 
+            Test test = TestsDataAccess.reconstruirTest (Menu.pedirDato (sc, "la ruta del archivo"));
+            System.out.println (test);
+        }
+        case "2" -> {
+               Test test = crearTestNuevo ();
+        }
+        }
+    }
+/*
+
+ */
 
     private static Test crearTestNuevo() {
         Test test = Menu.crearNuevoTest (sc);
