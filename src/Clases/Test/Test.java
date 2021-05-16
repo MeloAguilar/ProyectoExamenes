@@ -6,17 +6,16 @@ import Clases.Preguntas.Pregunta;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.TreeMap;
+import java.util.List;
 
 public class Test implements Serializable {
 
     private String nombre;
     private File ficheroTest;
-    private TreeMap<Integer, Pregunta> preguntas;
-    public static final long serialFilter = 2L;
+    private List<Pregunta> preguntas;
 
 
-    public Test(String nombre, TreeMap<Integer, Pregunta> preguntas) {
+    public Test(String nombre, List<Pregunta> preguntas) {
         this.nombre = nombre;
         this.preguntas = preguntas;
         ficheroTest = new File (TestsDataAccess.PATH+ nombre+TestsDataAccess.EXTENSION);
@@ -42,11 +41,11 @@ public class Test implements Serializable {
         this.nombre = nombre;
     }
 
-    public TreeMap<Integer, Pregunta> getPreguntas() {
+    public List<Pregunta> getPreguntas() {
         return preguntas;
     }
 
-    public void setPreguntas(TreeMap<Integer, Pregunta> preguntas) {
+    public void setPreguntas(List< Pregunta> preguntas) {
         this.preguntas = preguntas;
     }
 

@@ -2,13 +2,10 @@ package Clases.Preguntas;
 
 import java.io.Serializable;
 
-public abstract class Pregunta implements Serializable {
-    //Atributos
+public class Pregunta implements Serializable {
+
     private String enunciado;
     private double puntuacion;
-    public static final long serialFilter = 1L;
-    //Métodos
-
 
     public Pregunta(String enunciado, double puntuacion) {
         this.enunciado = enunciado;
@@ -34,7 +31,7 @@ public abstract class Pregunta implements Serializable {
     @Override
     public String toString() {
         return "Pregunta{" +
-                "enunciado='" + enunciado + '\'' +
+                "enunciado=" + enunciado +
                 ", puntuacion=" + puntuacion;
     }
 }

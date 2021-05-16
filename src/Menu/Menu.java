@@ -1,14 +1,11 @@
 package Menu;
 
-import Clases.AccesoADatos.TestsDataAccess;
 import Clases.Preguntas.Pregunta;
 import Clases.Preguntas.PreguntaCorta;
 import Clases.Preguntas.PreguntaTipoTest;
 import Clases.Test.Test;
 
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Menu {
 
@@ -43,26 +40,25 @@ public class Menu {
      * @param sc
      * @return
      */
-    public static Map<Integer, Pregunta> crearPreguntasDeUnTest(Scanner sc){
-        TreeMap<Integer, Pregunta> preguntas = new TreeMap<> (  );
+    public static List<Pregunta> crearPreguntasDeUnTest(Scanner sc){
+        List<Pregunta> preguntas = new LinkedList<> (  );
         Pregunta p = null;
         boolean exit = false;
-        int cointador = 1;
         do{
             String tipoPregunta = Menu.pedirDato (sc, "\n1 --> Pregunta corta\n2 --> Pregunta tipo test");
             String enunciado = Menu.pedirDato (sc, "el enunciado de la pregunta");
             switch(tipoPregunta){
                 case "1" -> {
                     p = new PreguntaCorta (enunciado,1, Menu.pedirDato (sc, "La respuesta correcta de la pregunta"));
-                    preguntas.put (cointador,p);
-                    cointador++;
+                    preguntas.add (p);
+
                 }
                 case "2" -> {
-                    Map<Character, String> posiblesRespuestas =  establecerOpcionesPreguntaTest (sc);
+                    List<String> posiblesRespuestas =  establecerOpcionesPreguntaTest (sc);
                     System.out.println (posiblesRespuestas );
                     p = new PreguntaTipoTest (enunciado, 2,posiblesRespuestas,escogerRespuestaCorrectaParaTipoTest (sc));
-                            preguntas.put (cointador, p);
-                            cointador++;
+                            preguntas.add ( p);
+
                 }default -> {
                     System.out.println ( "Introduzca un dato válido" );
                 }
@@ -91,14 +87,13 @@ public class Menu {
      * @param sc
      * @return
      */
-    private static Map<Character, String> establecerOpcionesPreguntaTest(Scanner sc){
-        Map<Character, String> posiblesRespuestas  = new TreeMap<> (  );
-        char clave = 'a';
+    private static List<String> establecerOpcionesPreguntaTest(Scanner sc){
+        List<String> posiblesRespuestas  = new LinkedList<> (  );
         boolean exit = false;
         do{
             String posibleRespuesta = pedirDato (sc, "una posible respuesta para la regunta");
-            posiblesRespuestas.put (clave, posibleRespuesta);
-            clave++;
+            posiblesRespuestas.add ( posibleRespuesta);
+
             if(pedirDato (sc,"no si quiere salir").equals ("no")){
                 exit = true;
             }
@@ -114,7 +109,30 @@ public class Menu {
      */
     public static Test crearNuevoTest(Scanner sc){
         String nombre = pedirDato (sc, "el nombre del test");
-        Map<Integer, Pregunta> preguntas = crearPreguntasDeUnTest (sc);
-        return new Test (nombre, (TreeMap<Integer, Pregunta>) preguntas);
+        List<Pregunta> preguntas = new LinkedList<> (  );
+        boolean exit = false;
+        do {
+            switch (pedirDato (sc, "\n1 --> Crear preguntas \n2 --> Generar automaticamente preguntas")) {
+                case "1" -> {
+                    preguntas = crearPreguntasDeUnTest (sc);
+                    exit = true;
+                }
+                case "2" -> {
+                    List<String> respuestasTT = new LinkedList<> ( );
+                    respuestasTT.add ( "r1");
+                    respuestasTT.add ("r2");
+                    respuestasTT.add ("r3");
+                    respuestasTT.add ("r4");
+                    Pregunta p1 = new PreguntaCorta ("Pregunta 1", 1, "respuesta1");
+                    Pregunta p2 = new PreguntaTipoTest ("Pregunta 2", 2, respuestasTT, 'c');
+                    Pregunta p3 = new PreguntaCorta ("Pregunta 3", 2, "respuesta3");
+                    preguntas.add ( p1);
+                    preguntas.add ( p2);
+                    preguntas.add ( p3);
+                    exit = true;
+                }
+            }
+        }while(!exit);
+        return new Test (nombre, preguntas);
     }
 }

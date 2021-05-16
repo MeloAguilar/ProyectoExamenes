@@ -1,32 +1,32 @@
 package Clases.Preguntas;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 public class PreguntaTipoTest extends Pregunta implements Serializable {
 
     //Atributos
-    private Map<Character, String> posiblesRespuestas;
+    private List<String> posiblesRespuestas;
     private char respuestaCorrecta;
-    public static final long serialFilter = 1L;
 
     //Métodos
 
     //Constructor
 
 
-    public PreguntaTipoTest(String enunciado, double puntuacion, Map<Character, String> posiblesRespuestas, char caracterRespuestaCorrecta) {
+    public PreguntaTipoTest(String enunciado, double puntuacion, List<String> posiblesRespuestas, char caracterRespuestaCorrecta) {
         super (enunciado, puntuacion);
         this.posiblesRespuestas = posiblesRespuestas;
         this.respuestaCorrecta = caracterRespuestaCorrecta;
     }
 
     //Getters & Setters
-    public Map<Character, String> getPosiblesRespuestas() {
+    public List< String> getPosiblesRespuestas() {
         return posiblesRespuestas;
     }
 
-    public void setPosiblesRespuestas(Map<Character, String> posiblesRespuestas) {
+    public void setPosiblesRespuestas(List<String> posiblesRespuestas) {
         this.posiblesRespuestas = posiblesRespuestas;
     }
 

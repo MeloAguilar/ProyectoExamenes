@@ -5,7 +5,8 @@ import Clases.Test.Test;
 import Menu.Menu;
 
 import java.io.*;
-import java.util.TreeMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TestsDataAccess {
 
@@ -40,27 +41,25 @@ public class TestsDataAccess {
      */
     public static boolean introducirTestEnFichero(Test testAIntroducir){
         boolean success = false;
-        ObjectOutputStream outputStream = null;
-        MyobjectOutputStream miOutputStream = null;
+        ObjectOutputStream miOutputStream = null;
         Pregunta pregunta;
         try {
-            outputStream = new ObjectOutputStream (new FileOutputStream (testAIntroducir.getFicheroTest ()));
-            miOutputStream = new MyobjectOutputStream (new FileOutputStream (testAIntroducir.getFicheroTest ()));
-            for(int i = 0; i < testAIntroducir.getPreguntas ().size () ; i++) {
-                pregunta = testAIntroducir.getPreguntas ( ).get (i+1);
+
+            for(int i = 0; i < testAIntroducir.getPreguntas ().toArray ( ).length ; i++) {
+               pregunta = testAIntroducir.getPreguntas ().get (i);
                 if (i < 1) {
-                    outputStream.writeObject (pregunta);
+                    miOutputStream = new ObjectOutputStream (new FileOutputStream (testAIntroducir.getFicheroTest ()));
+                    miOutputStream.writeObject (pregunta);
                     success = true;
                 } else {
+                    miOutputStream = new MyobjectOutputStream (new FileOutputStream (testAIntroducir.getFicheroTest (), true));
                     miOutputStream.writeObject (pregunta);
                     success = true;
                 }
-
             }
         }catch(IOException e){
             System.out.println (Menu.MENSAJEERROR);
         }finally{
-            cerrarFlujo (outputStream);
             cerrarFlujo (miOutputStream);
         }
         return success;
@@ -76,18 +75,24 @@ public class TestsDataAccess {
      * @param path: Ruta de un archivo en el que se encuentran los datos de un test
      * @return test:
      */
-    public static Test reconstruirTest(String path){
+    public static List<Pregunta> reconstruirTest(String path){
         ObjectInputStream inputStream = null;
-        Test test = null;
+        Pregunta pregunta = null;
+        List<Pregunta> listapreguntas= new LinkedList<> (  );
         try{
             inputStream = new ObjectInputStream (new FileInputStream (path));
-            test = (Test)inputStream.readObject ();
-        }catch(IOException | ClassNotFoundException e){
+            while((pregunta = (Pregunta)inputStream.readObject ()) != null){
+                listapreguntas.add (pregunta);
+            }
+        }catch(EOFException f){
+
+        }
+        catch(IOException | ClassNotFoundException e){
             System.out.println (Menu.MENSAJEERROR );
         }finally {
             cerrarFlujo (inputStream);
         }
-        return test;
+        return listapreguntas;
     }
 
 
