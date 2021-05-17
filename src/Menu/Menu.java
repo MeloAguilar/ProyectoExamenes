@@ -28,153 +28,157 @@ public class Menu {
      */
     public static String pedirDato(Scanner sc, String datoAIntroducir) {
         String mensaje = "introduzca aquí ";
-        System.out.println (mensaje + datoAIntroducir);
-        return sc.nextLine ( );
+        System.out.println(mensaje + datoAIntroducir);
+        return sc.nextLine();
     }
 
 
     /**
      * <h2>crearPreguntasDeUntest(Scanner)</h2>
-     *
+     * <p>
      * Método que establece las preguntas de un test pidiendoselas al usuario por teclado
      * Precondiciones:
      * Postcondiciones:
+     *
      * @param sc
      * @return
      */
-    public static List<Pregunta> crearPreguntasDeUnTest(Scanner sc){
-        List<Pregunta> preguntas = new LinkedList<> (  );
+    public static List<Pregunta> crearPreguntasDeUnTest(Scanner sc) {
+        List<Pregunta> preguntas = new LinkedList<>();
         Pregunta p = null;
         boolean exit = false;
-        do{
-            String tipoPregunta = Menu.pedirDato (sc, "\n1 --> Pregunta corta\n2 --> Pregunta tipo test");
-            String enunciado = Menu.pedirDato (sc, "el enunciado de la pregunta");
-            switch(tipoPregunta){
+        do {
+            String tipoPregunta = Menu.pedirDato(sc, "\n1 --> Pregunta corta\n2 --> Pregunta tipo test");
+            String enunciado = Menu.pedirDato(sc, "el enunciado de la pregunta");
+            switch (tipoPregunta) {
                 case "1" -> {
-                    p = new PreguntaCorta (enunciado,1, Menu.pedirDato (sc, "La respuesta correcta de la pregunta"));
-                    preguntas.add (p);
+                    p = new PreguntaCorta(enunciado, 1, Menu.pedirDato(sc, "La respuesta correcta de la pregunta"));
+                    preguntas.add(p);
 
                 }
                 case "2" -> {
                     char caracterDeRespuesta = 'a';
-                    List<String> posiblesRespuestas =  establecerOpcionesPreguntaTest (sc);
-                    for(String respuesta : posiblesRespuestas){
-                        System.out.println (caracterDeRespuesta + " -> " + respuesta);
+                    List<String> posiblesRespuestas = establecerOpcionesPreguntaTest(sc);
+                    for (String respuesta : posiblesRespuestas) {
+                        System.out.println(caracterDeRespuesta + " -> " + respuesta);
                         caracterDeRespuesta++;
                     }
-                    p = new PreguntaTipoTest (enunciado, 2,posiblesRespuestas,escogerRespuestaCorrectaParaTipoTest (sc));
-                            preguntas.add ( p);
+                    p = new PreguntaTipoTest(enunciado, 2, posiblesRespuestas, escogerRespuestaCorrectaParaTipoTest(sc));
+                    preguntas.add(p);
 
-                }default -> {
-                    System.out.println ( "Introduzca un dato válido" );
+                }
+                default -> {
+                    System.out.println("Introduzca un dato válido");
                 }
             }
-            if((pedirDato (sc,"no si quiere salir")).equals ("no")){
+            if ((pedirDato(sc, "no si quiere salir")).equals("no")) {
                 exit = true;
             }
-        }while(!exit);
+        } while (!exit);
         return preguntas;
     }
 
 
     /**
      * Método que sirve para establecer por teclado la respuesta correcta de una pregunta tipo test
+     *
      * @param sc
      * @return
      */
-    private static char escogerRespuestaCorrectaParaTipoTest(Scanner sc){
+    private static char escogerRespuestaCorrectaParaTipoTest(Scanner sc) {
         char opcionCorrecta = 'a';
-        return pedirDato (sc, "el caracter de la respuesta correcta").toCharArray ()[0];
+        return pedirDato(sc, "el caracter de la respuesta correcta").toCharArray()[0];
     }
 
 
     /**
      * Método que establece las opciones de una pregunta tipo test mediante datos pedidos al usuario por teclado
+     *
      * @param sc
      * @return
      */
-    private static List<String> establecerOpcionesPreguntaTest(Scanner sc){
-        List<String> posiblesRespuestas  = new LinkedList<> (  );
+    private static List<String> establecerOpcionesPreguntaTest(Scanner sc) {
+        List<String> posiblesRespuestas = new LinkedList<>();
         boolean exit = false;
-        do{
-            String posibleRespuesta = pedirDato (sc, "una posible respuesta para la regunta");
-            posiblesRespuestas.add ( posibleRespuesta);
+        do {
+            String posibleRespuesta = pedirDato(sc, "una posible respuesta para la regunta");
+            posiblesRespuestas.add(posibleRespuesta);
 
-            if(pedirDato (sc,"no si quiere salir").equals ("no")){
+            if (pedirDato(sc, "no si quiere salir").equals("no")) {
                 exit = true;
             }
-        }while(!exit);
-    return posiblesRespuestas;
+        } while (!exit);
+        return posiblesRespuestas;
     }
 
 
     /**
      * Método que genera un test a partir de datos introducidos mediante scanner
+     *
      * @param sc
      * @return
      */
-    public static Test crearNuevoTest(Scanner sc){
-        String nombre = pedirDato (sc, "el nombre del test");
-        List<Pregunta> preguntas = new LinkedList<> (  );
+    public static Test crearNuevoTest(Scanner sc) {
+        String nombre = pedirDato(sc, "el nombre del test");
+        List<Pregunta> preguntas = new LinkedList<>();
         boolean exit = false;
         do {
-            switch (pedirDato (sc, "\n1 --> Crear preguntas \n2 --> Generar automaticamente preguntas")) {
+            switch (pedirDato(sc, "\n1 --> Crear preguntas \n2 --> Generar automaticamente preguntas")) {
                 case "1" -> {
-                    preguntas = crearPreguntasDeUnTest (sc);
+                    preguntas = crearPreguntasDeUnTest(sc);
                     exit = true;
                 }
                 case "2" -> {
-                    List<String> respuestasTT = new LinkedList<> ( );
-                    respuestasTT.add ( "r1");
-                    respuestasTT.add ("r2");
-                    respuestasTT.add ("r3");
-                    respuestasTT.add ("r4");
-                    Pregunta p1 = new PreguntaCorta ("Pregunta 1", 1, "respuesta1");
-                    Pregunta p2 = new PreguntaTipoTest ("Pregunta 2", 2, respuestasTT, 'c');
-                    Pregunta p3 = new PreguntaCorta ("Pregunta 3", 2, "respuesta3");
-                    preguntas.add ( p1);
-                    preguntas.add ( p2);
-                    preguntas.add ( p3);
+                    List<String> respuestasTT = new LinkedList<>();
+                    respuestasTT.add("r1");
+                    respuestasTT.add("r2");
+                    respuestasTT.add("r3");
+                    respuestasTT.add("r4");
+                    Pregunta p1 = new PreguntaCorta("Pregunta 1", 1, "respuesta1");
+                    Pregunta p2 = new PreguntaTipoTest("Pregunta 2", 2, respuestasTT, 'c');
+                    Pregunta p3 = new PreguntaCorta("Pregunta 3", 2, "respuesta3");
+                    preguntas.add(p1);
+                    preguntas.add(p2);
+                    preguntas.add(p3);
                     exit = true;
                 }
             }
-        }while(!exit);
-        return new Test (nombre, preguntas);
+        } while (!exit);
+        return new Test(nombre, preguntas);
     }
 
 
     /**
-     *
      * @param sc
      * @param nombreTest
      * @return
      */
-    public static double RealizarTest(Scanner sc, String nombreTest){
+    public static double RealizarTest(Scanner sc, String nombreTest) {
         double puntuacion = 0;
         int numeroPregunta = 1;
-        LinkedList<Pregunta> preguntas = (LinkedList<Pregunta>) TestsDataAccess.reconstruirTest (nombreTest);
-        System.out.println ("**********************************************************\nTest --> "+nombreTest+"\n**********************************************************\n" );
-        for(Pregunta pregunta: preguntas){
-            System.out.println ("Pregunta "+numeroPregunta+"\n" +pregunta.getEnunciado () );
+        LinkedList<Pregunta> preguntas = (LinkedList<Pregunta>) TestsDataAccess.reconstruirTest(nombreTest);
+        System.out.println("**********************************************************\nTest --> " + nombreTest + "\n**********************************************************\n");
+        for (Pregunta pregunta : preguntas) {
+            System.out.println("Pregunta " + numeroPregunta + "\n" + pregunta.getEnunciado());
             numeroPregunta++;
-            if(pregunta instanceof PreguntaCorta){
-                System.out.println ("Introduce la respuesta" );
-                if(sc.nextLine ().equals (((PreguntaCorta) pregunta).getRespuestaCorrecta ())){
-                    puntuacion += pregunta.getPuntuacion ();
+            if (pregunta instanceof PreguntaCorta) {
+                System.out.println("Introduce la respuesta");
+                if (sc.nextLine().equals(((PreguntaCorta) pregunta).getRespuestaCorrecta())) {
+                    puntuacion += pregunta.getPuntuacion();
                 }
             } else {
                 char letra = 'a';
                 PreguntaTipoTest test = (PreguntaTipoTest) pregunta;
-                for(String posibleR : ((PreguntaTipoTest) pregunta).getPosiblesRespuestas ()){
-                    System.out.println (letra + " --> " +posibleR );
+                for (String posibleR : ((PreguntaTipoTest) pregunta).getPosiblesRespuestas()) {
+                    System.out.println(letra + " --> " + posibleR);
                     letra++;
                 }
-                System.out.println ("Introduce el caracter de la respuesta" );
-                if(sc.nextLine ().toCharArray ()[0]== (test.getRespuestaCorrecta ())){
-                    puntuacion += pregunta.getPuntuacion ();
-                }else{
-                    if(puntuacion > pregunta.getPuntuacion ()){
-                        puntuacion -= ((PreguntaTipoTest) pregunta).getPuntuacionReal ();
+                System.out.println("Introduce el caracter de la respuesta");
+                if (sc.nextLine().toCharArray()[0] == (test.getRespuestaCorrecta())) {
+                    puntuacion += pregunta.getPuntuacion();
+                } else {
+                    if (puntuacion > pregunta.getPuntuacion()) {
+                        puntuacion -= ((PreguntaTipoTest) pregunta).getPuntuacionReal();
                     } else {
                         puntuacion = 0;
                     }
